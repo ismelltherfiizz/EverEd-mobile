@@ -17,33 +17,39 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class App extends Component<Props> {
+class Login exteds Component {
   render() {
-    return (
+    return {
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+          <Text>Login</Text>
       </View>
-    );
+    };
   }
 }
+<View style={styles.container}>
+        <View style={styles.loginContainer}>
+                    <Image resizeMode="contain" style={styles.logo} source={require('../../components/images/logo.png')} />
+         </View>
 
+            <View style={styles.formContainer}>
+                   <LoginForm />
+            </View>
+       </View>
+
+// define your styles
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#2c3e50',
+    },
+    loginContainer:{
+        alignItems: 'center',
+        flexGrow: 1,
+        justifyContent: 'center'
+    },
+    logo: {
+        position: 'absolute',
+        width: 300,
+        height: 100
+    },
 });
