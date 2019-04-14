@@ -14,8 +14,39 @@ class Login exteds Component {
   render() {
     return {
       <View style={styles.container}>
-          <Text>Login</Text>
-      </View>
+   <TabNavigator>
+     <TabNavigator.Item
+       title="Schedule"
+       renderIcon={() => <Image source={{uri: `${globals.serverUrl}/images/reactjs-conf/schedule-icon.png`}} style={styles.icon} />}
+       selected={this.state.selectedTab === 'schedule'}
+       onPress={() => { this.setState({selectedTab: 'schedule'}); }}>
+       <Navigator
+         style={[styles.container, styles.navigator]}
+         initialRoute={routes.list}
+         renderScene={this.renderScene.bind(this)}
+         navigationBar={NavBar}
+         ref={component => this._navigator = component} />
+     </TabNavigator.Item>
+     <TabNavigator.Item
+       title="Venue"
+       renderIcon={() => <Image source={{uri: `${globals.serverUrl}/images/reactjs-conf/venue-icon.png`}} style={styles.icon} />}
+       selected={this.state.selectedTab === 'venue'}
+       onPress={() => { this.setState({selectedTab: 'venue'}); }}>
+       <Screen title="Venue">
+         <Venue />
+       </Screen>
+     </TabNavigator.Item>
+     <TabNavigator.Item
+       title="Tweets"
+       renderIcon={() => <Image source={{uri: `${globals.serverUrl}/images/reactjs-conf/tweets-icon.png`}} style={styles.icon} />}
+       selected={this.state.selectedTab === 'tweets'}
+       onPress={() => { this.setState({selectedTab: 'tweets'}); }}>
+       <Screen title="Tweets">
+         <Tweets />
+       </Screen>
+     </TabNavigator.Item>
+   </TabNavigator>
+ </View>
     };
   }
 }
