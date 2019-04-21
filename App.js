@@ -39,9 +39,9 @@ class Login exteds Component {
      <TabNavigator.Item
        title="Tweets"
        renderIcon={() => <Image source={{uri: `${globals.serverUrl}/images/reactjs-conf/tweets-icon.png`}} style={styles.icon} />}
-       selected={this.state.selectedTab === 'tweets'}
-       onPress={() => { this.setState({selectedTab: 'tweets'}); }}>
-       <Screen title="Tweets">
+       selected={this.state.selectedTab === ''}
+       onPress={() => { this.setState({selectedTab: ''}); }}>
+       <Screen title="1">
          <Tweets />
        </Screen>
      </TabNavigator.Item>
