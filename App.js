@@ -1,62 +1,141 @@
+//This is an example code for Bottom Navigation//
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
-import AppNavigator from './navigation/AppNavigator';
+//import react in our code.
 
-export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-  };
+import { Button, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+//import all the basic component we have used
 
-  render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
-      return (
-        <AppLoading
-          startAsync={this._loadResourcesAsync}
-          onError={this._handleLoadingError}
-          onFinish={this._handleFinishLoading}
-        />
-      );
-    } else {
-      return (
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </View>
-      );
-    }
-  }
+import { Ionicons } from 'react-native-vector-icons';
+//import Ionicons to show the icon for bottom options
 
-  _loadResourcesAsync = async () => {
-    return Promise.all([
-      Asset.loadAsync([
-        require('./assets/images/robot-dev.png'),
-        require('./assets/images/robot-prod.png'),
-      ]),
-      Font.loadAsync({
-        // This is the font that we are using for our tab bar
-        ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
-        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-      }),
-    ]);
-  };
+//For React Navigation 2.+ import following
+//import {createStackNavigator,createBottomTabNavigator} from 'react-navigation';
 
-  _handleLoadingError = error => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
-    console.warn(error);
-  };
+//For React Navigation 3.+ import following
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+  createAppContainer,
+} from 'react-navigation';
+//import createStackNavigator, createBottomTabNavigator, createAppContainer in our project
 
-  _handleFinishLoading = () => {
-    this.setState({ isLoadingComplete: true });
-  };
-}
+import HomeScreen from './components/HomeScreen';
+import SearchScreen from './components/SearchScreen';
+import CreateScreen from './components/CreateScreen';
+import ProfileScreen from './components/ProfileScreen';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+const HomeStack = createStackNavigator(
+  {
+    //Defination of Navigaton from home screen
+    Home: { screen: HomeScreen },
   },
-});
+  {
+    //For React Navigation 2.+ change defaultNavigationOptions->navigationOptions
+    defaultNavigationOptions: {
+      //Header customization of the perticular Screen
+      headerStyle: {
+        backgroundColor: 'gray',
+      },
+      headerTintColor: '#FFFFFF',
+      title: 'Home',
+      //Header title
+    },
+  }
+);
+const SearchStack = createStackNavigator(
+  {
+    //Defination of Navigaton from home screen
+    Search: { screen: SearchScreen },
+
+  },
+  {
+    //For React Navigation 2.+ change defaultNavigationOptions->navigationOptions
+    defaultNavigationOptions: {
+      //Header customization of the perticular Screen
+      headerStyle: {
+        backgroundColor: 'gray',
+      },
+      headerTintColor: '#FFFFFF',
+      title: 'Search',
+      //Header title
+    },
+  }
+);
+const ProfileStack = createStackNavigator(
+  {
+    //Defination of Navigaton from home screen
+    Profile: { screen: ProfileScreen },
+  },
+  {
+    //For React Navigation 2.+ change defaultNavigationOptions->navigationOptions
+    defaultNavigationOptions: {
+      //Header customization of the perticular Screen
+      headerStyle: {
+        backgroundColor: 'gray',
+      },
+      headerTintColor: '#FFFFFF',
+      title: 'Profile',
+      //Header title
+    },
+  }
+);
+const CreateStack = createStackNavigator(
+  {
+    //Defination of Navigaton from home screen
+    Create: { screen: CreateScreen },
+
+  },
+  {
+    //For React Navigation 2.+ change defaultNavigationOptions->navigationOptions
+    defaultNavigationOptions: {
+      //Header customization of the perticular Screen
+      headerStyle: {
+        backgroundColor: 'gray',
+      },
+      headerTintColor: '#FFFFFF',
+      title: 'Create',
+      //Header title
+    },
+  }
+);
+const App = createBottomTabNavigator(
+  {
+    //Defination of Navigaton bottom options
+    Home: { screen: HomeStack },
+    Search: { screen: SearchStack },
+    Create: { screen: CreateStack },
+    Profile: { screen: ProfileStack },
+  },
+  {
+    //For React Navigation 2.+ change defaultNavigationOptions->navigationOptions
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        let IconComponent = Ionicons;
+        let iconName;
+        if (routeName === 'Home') {
+          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+          // Sometimes we want to add badges to some icons.
+          // You can check the implementation below.
+        } else if (routeName === 'Profile') {
+          iconName = `ios-contact`;
+        } else if (routeName === 'Search') {
+          iconName = `ios-search`;
+        } else if (routeName === 'Create') {
+          iconName = `ios-create`;
+        }
+
+        // You can return any component that you like here!
+        return <IconComponent name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: '#42f44b',
+      inactiveTintColor: 'gray',
+    },
+  }
+);
+//For React Navigation 2.+ need to export App only
+//export default App;
+//For React Navigation 3.+
+export default createAppContainer(App);
