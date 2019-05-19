@@ -23,6 +23,10 @@ import HomeScreen from './components/HomeScreen';
 import SearchScreen from './components/SearchScreen';
 import CreateScreen from './components/CreateScreen';
 import ProfileScreen from './components/ProfileScreen';
+import Separator from './components/Separator';
+import Tel from './components/Tel';
+import Email from './components/Email';
+import Constants from './components/constants';
 
 const HomeStack = createStackNavigator(
   {
